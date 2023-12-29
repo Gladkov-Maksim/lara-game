@@ -3,15 +3,16 @@
 namespace App\Collection;
 
 use App\Level\Level1;
+use App\Hero;
 
 class LevelCollection
 {
     private \Ramsey\Collection\Collection $collection;
 
-    public function __construct()
+    public function __construct(Hero $hero)
     {
         $this->collection = new \Ramsey\Collection\Collection('App\\Level\\LevelInterface');
-        $this->collection->add(new Level1());
+        $this->collection->add(new Level1($hero));
     }
 
     /**
