@@ -22,6 +22,7 @@ class QuestionEvent implements EventInterface
         $this->questions = Question::select('text', 'answer', 'cost')
             ->where('difficultyLevel', $this->difficultyLevel)
             ->limit($this->count)
+            ->inRandomOrder()
             ->get()
             ->toArray();
     }
@@ -31,14 +32,16 @@ class QuestionEvent implements EventInterface
      */
     public function run(): void
     {
+        stdoutSlow("Теперь тебе предстоит ответить на несколько вопросов для перехода на следующий уровень!\n");
         foreach ($this->questions as $question) {
-            $answer = readline($question['text'] . "\n");
+            stdoutSlow($question['text'] . "\n");
+            $answer = readline();
             if ($answer === $question['answer']) {
-                echo  "Верно!\n";
+                stdoutSlow("Верно!\n");
                 $this->hero->setMoney($this->hero->getMoney() + $question['cost']);
             }
             else {
-                echo "Неверный ответ\n";
+                stdoutSlow("Неверный ответ\n");
                 $this->hero->setMoney($this->hero->getMoney() - $question['cost']);
             }
 

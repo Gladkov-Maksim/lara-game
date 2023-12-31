@@ -3,6 +3,7 @@
 namespace App\Collection;
 
 use App\Level\Level1;
+use App\Level\Level2;
 use App\Hero;
 
 class LevelCollection
@@ -13,6 +14,7 @@ class LevelCollection
     {
         $this->collection = new \Ramsey\Collection\Collection('App\\Level\\LevelInterface');
         $this->collection->add(new Level1($hero));
+        $this->collection->add(new Level2($hero));
     }
 
     /**

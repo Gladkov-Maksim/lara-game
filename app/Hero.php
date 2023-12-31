@@ -55,6 +55,18 @@ final class Hero
         return  $this->health;
     }
 
+    /**
+     * Сеттер здоровья
+     */
+    public function setHealth(int $value): void
+    {
+        if ($value < 0) {
+            $this->health = 0;
+            return;
+        }
+
+        $this->health = $value;
+    }
 
     /**
      * Вывод информации о состоянии героя

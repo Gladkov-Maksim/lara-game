@@ -2,22 +2,28 @@
 
 namespace App\Monster;
 
+use App\Hero;
+
 class Monster implements MonsterInterface
 {
     private int $health;
+    private int $power;
     private string $welcomePhrase = "Привет, я монстр. Тебе ...!\n";
 
     public function __construct(string $difficultyLevel)
     {
         switch ($difficultyLevel) {
             case 'easy':
-                $this->health = 20;
+                $this->health = 200;
+                $this->power = 40;
                 break;
             case 'medium':
                 $this->health = 50;
+                $this->power = 20;
                 break;
             case 'hard':
                 $this->health = 80;
+                $this->power = 30;
                 break;
         }
     }
@@ -49,6 +55,14 @@ class Monster implements MonsterInterface
     public function getWelcomePhrase(): string
     {
         return $this->welcomePhrase;
+    }
+
+    /**
+     * Обработка атаки монстра
+     */
+    public function attack(Hero $hero): void
+    {
+        $hero->setHealth($hero->getHealth() - $this->power);
     }
 
     /**

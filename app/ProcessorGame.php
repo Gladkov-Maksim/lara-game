@@ -29,22 +29,13 @@ final class ProcessorGame
      */
     private function startGame()
     {
-        echo "Игра началась!\n";
-        $this->changeLevel();
-    }
-
-    private function changeLevel()
-    {
-        if (!$this->levelCollection->getCount()) {
-            $this->finishGame();
-        }
-
-        if ($this->currentLevel) {
+        stdoutSlow("Игра началась!\n");
+        while ($this->levelCollection->getCount()) {
+            $this->currentLevel = $this->levelCollection->first();
             $this->levelCollection->remove($this->currentLevel);
+            $this->currentLevel->run();
         }
-
-        $this->currentLevel = $this->levelCollection->first();
-        $this->currentLevel->run();
+        $this->finishGame();
     }
 
     /**
@@ -52,7 +43,7 @@ final class ProcessorGame
      */
     private function finishGame()
     {
-        echo "Игра закончена!\n";
+        stdoutSlow("Игра закончена");
         die();
     }
 }
